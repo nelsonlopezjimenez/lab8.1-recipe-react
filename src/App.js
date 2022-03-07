@@ -44,6 +44,10 @@ class App extends Component {
     });
   }
 
+  onDelete(id){
+    this.state.recipes.filter()
+  }
+ 
   // EXERCISE 1 : Form component is where user enter recipe's data. Its initial state is empty 
   //              string for title, instructions, img and an empty array for ingredients
   //              it has onSubmit event, onClick event, and several onChange events with associated function calls
@@ -70,11 +74,11 @@ class App extends Component {
 
         <h1>My Recipes</h1>
 
-        <Form /> {/*Modify it here EXERCISE 1 */}
+        <Form onSave={this.handleSave} /> {/*Modify it here EXERCISE 1 */}
 
         <hr />
 
-        <List  />  {/*Modify it here EXERCISE 2 */}
+        <List   recipes={ this.state.recipes } onDelete={this.onDelete} /> 
       </div>
     );
   }
@@ -82,14 +86,8 @@ class App extends Component {
                   {/*go to line 187 for EXERCISE 3 */}
 
 function List(props) {
-
-  //try <Recipe key={recipe.id} {...recipe} /> //spread operator instead of 
-  // passing one-by-one property
-  //In return statement you wrap Recipe JSX component with div class 'recipe-list'
   const recipesJSX = props.recipes.map((recipe, index) => (
-    <Recipe key={recipe.id} title={recipe.title} img={recipe.img}
-      instructions={recipe.instructions} id={recipe.id}
-      ingredients={recipe.ingredients} />
+    <Recipe key={recipe.id} {...recipe} onDelete={props.onDelete} />
   ));
 
   return (
@@ -101,7 +99,7 @@ function List(props) {
 
 function Recipe(props) {
 
-  const { title, img, instructions, id } = props; // destructuring the props 
+  const { title, img, instructions, id, onDelete } = props; // destructuring the props 
   // wrapping each ingredient with li HTML elements and returning them
   // with an implicit return inside an arrow function.
   // note that the unique key is the index, which is not optimal
@@ -121,14 +119,14 @@ function Recipe(props) {
         </ul>
         <h4>Instructions:</h4>
         <p>{instructions}</p>
-        <button type="button" onClick={() => alert(`Are you sure to DELETE recipe number ${id + 1}?`)}>DELETE</button>
+        <button type="button" onClick={() => onDelete(id)}>DELETE</button>
       </div>
     </div>
   );
 
 }
 
-class Form extends Component {
+class Form extends Component  {
 
   
   constructor(props) {
@@ -140,16 +138,19 @@ class Form extends Component {
       img: ''
     };
     
-    //this.handleChange = this.handleChange.bind(this);
+
+    this.handleChange = this.handleChange.bind(this);
     this.handleNewIngredient = this.handleNewIngredient.bind(this);
     this.handleChangeIng = this.handleChangeIng.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+
+    
   
-  // handleChange(e) {
-  //   console.log(e.target.value);
-  //   this.setState({[e.target.name]: e.target.value});
-  // }
+   handleChange(e) {
+     console.log(e.target.value);
+     this.setState({[e.target.name]: e.target.value});
+   }
 
      // Pay ATTENTION: arrow functions DO NOT HAVE their own "this" : no need to bind
   handleChangeTitle= (e) => {
@@ -183,7 +184,13 @@ class Form extends Component {
   //            You should use this.setState( {.....})
   handleReset = (e) => {
     e.preventDefault();
-    alert(`Are you sure you want to reset?`)
+    alert("Are you sure you want to reset?")
+    this.setState({
+      title: '',
+      instructions: '',
+      ingredients: [''],
+      img: ''
+    })
    {/*Modify it here EXERCISE 3 */}
 }
 
@@ -197,6 +204,7 @@ class Form extends Component {
       img: ''
     })
   }
+  
   
   render() {
     const {title, instructions, img, ingredients} = this.state;
