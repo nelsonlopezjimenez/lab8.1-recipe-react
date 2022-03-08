@@ -70,10 +70,12 @@ class App extends Component {
 
         <h1>My Recipes</h1>
 
+      //onSave is dealt here in the app component and uses handleSave to save the recipe to the previous recipes object
         <Form onSave={this.handleSave} /> {/*Modify it here EXERCISE 1 */}
 
         <hr />
 
+      //saving desired data in this.state.recipes to the recipes array object that then uses map method
         <List  recipes={this.state.recipes} />  {/*Modify it here EXERCISE 2 */}
       </div>
     );
