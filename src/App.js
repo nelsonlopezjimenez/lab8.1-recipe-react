@@ -70,11 +70,13 @@ class App extends Component {
 
         <h1>My Recipes</h1>
 
-        <Form /> {/*Modify it here EXERCISE 1 */}
+      //onSave is dealt here in the app component and uses handleSave to save the recipe to the previous recipes object
+        <Form onSave={this.handleSave} /> {/*Modify it here EXERCISE 1 */}
 
         <hr />
 
-        <List  />  {/*Modify it here EXERCISE 2 */}
+      //saving desired data in this.state.recipes to the recipes array object that then uses map method
+        <List  recipes={this.state.recipes} />  {/*Modify it here EXERCISE 2 */}
       </div>
     );
   }
@@ -185,6 +187,13 @@ class Form extends Component {
     e.preventDefault();
     alert(`Are you sure you want to reset?`)
    {/*Modify it here EXERCISE 3 */}
+    //from lines 136-141
+    this.setState({
+      title: '',
+      instructions: "",
+      ingredients: [''],
+      img: ''
+    });
 }
 
   handleSubmit(e) {
