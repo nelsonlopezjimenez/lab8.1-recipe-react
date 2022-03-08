@@ -70,11 +70,15 @@ class App extends Component {
 
         <h1>My Recipes</h1>
 
-        <Form /> {/*Modify it here EXERCISE 1 */}
+        <Form 
+          onSave={this.handleSave}
+        /> {/*Modify it here EXERCISE 1 */}
 
         <hr />
 
-        <List  />  {/*Modify it here EXERCISE 2 */}
+        <List  
+          recipes={this.state.recipes}
+        />  {/*Modify it here EXERCISE 2 */}
       </div>
     );
   }
@@ -178,24 +182,27 @@ class Form extends Component {
     this.setState({ingredients});
   }
 
+  resetState = () => 
+    this.setState({
+      title: '',
+      instructions: "",
+      ingredients: [''],
+      img: ''
+    });
+
   // EXERCISE 3: handleReset call must set state to its initial state as 
   //             when the constructor of class Form is called (look above)
   //            You should use this.setState( {.....})
   handleReset = (e) => {
     e.preventDefault();
-    alert(`Are you sure you want to reset?`)
-   {/*Modify it here EXERCISE 3 */}
+    alert(`Are you sure you want to reset?`);
+    this.resetState();
 }
 
   handleSubmit(e) {
     e.preventDefault();
     this.props.onSave({...this.state});
-    this.setState({
-      title: '',
-      instructions: '',
-      ingredients: [''],
-      img: ''
-    })
+    this.resetState();
   }
   
   render() {
