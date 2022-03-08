@@ -185,6 +185,13 @@ class Form extends Component {
     e.preventDefault();
     alert(`Are you sure you want to reset?`)
    {/*Modify it here EXERCISE 3 */}
+    //from lines 136-141
+    this.setState({
+      title: '',
+      instructions: "",
+      ingredients: [''],
+      img: ''
+    });
 }
 
   handleSubmit(e) {
