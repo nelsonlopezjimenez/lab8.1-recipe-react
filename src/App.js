@@ -72,7 +72,7 @@ class App extends Component {
 
         <h1>My Recipes</h1>
 
-        <Form /> {}
+        <Form /> {this.handleSave = this.handleSave.bind(this)}
 
         <hr />
 
@@ -94,14 +94,14 @@ function List(props) {
 //     ingredients={recipe.ingredients} />
       
 //   ));
-const recipesJSX = props.recipes.map((recipe, index) => (
-     <Recipe key={recipe.id} {...recipe} />));
+// const recipesJSX = props.recipes.map((recipe, index) => (
+//      <Recipe key={recipe.id} {...recipe} />));
 
-  return (
-    <div className="recipe-list">
-      {recipesJSX}
-    </div>
-  );
+//   return (
+//     <div className="recipe-list">
+//       {recipesJSX}
+//     </div>
+//   );
 }
 
 function Recipe(props) {
