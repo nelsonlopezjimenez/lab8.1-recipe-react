@@ -70,11 +70,11 @@ class App extends Component {
 
         <h1>My Recipes</h1>
 
-        <Form /> {/*Modify it here EXERCISE 1 */}
+        <Form onSave = {this.handleSave}/>
 
         <hr />
 
-        <List  />  {/*Modify it here EXERCISE 2 */}
+        <List  recipes = {this.state.recipes}/>
       </div>
     );
   }
@@ -184,7 +184,12 @@ class Form extends Component {
   handleReset = (e) => {
     e.preventDefault();
     alert(`Are you sure you want to reset?`)
-   {/*Modify it here EXERCISE 3 */}
+    this.setState({
+      title: '',
+      instructions: '',
+      ingredients:[''],
+      img: ''
+    })
 }
 
   handleSubmit(e) {
