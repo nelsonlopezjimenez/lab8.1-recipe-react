@@ -43,8 +43,8 @@ class App extends Component {
       }
     });
   }
-
-  // EXERCISE 1 : Form component is where user enter recipe's data. Its initial state is empty 
+  /*
+   // EXERCISE 1 : Form component is where user enter recipe's data. Its initial state is empty
   //              string for title, instructions, img and an empty array for ingredients
   //              it has onSubmit event, onClick event, and several onChange events with associated function calls
   //              onSubmit event triggers a onSave call (passed as prop from App component) and state  is updated.
@@ -52,7 +52,7 @@ class App extends Component {
   //              onChange event set the state to the values entered by the user as new recipe.
   //              onSave passed from App component through the props is linked to this.handleSave in the App component
   //                 By submitting the form, onSave function call allows App component, parent of Form, to acquire the new
-  //                 recipe values and add it to its state.recipes array. The event happens in Form component, but it 
+  //                 recipe values and add it to its state.recipes array. The event happens in Form component, but it
   //                 is being implemented in App component. Remember data travels down the tree only, not upstream or between
   //                  siblings. In order for the new recipe to be listed, the new recipe values must pass to List
   //                 component. It cannot happen directly. So, Form "communicate" the new recipe values to App through onSave call
@@ -63,6 +63,8 @@ class App extends Component {
   //in the List component you can access it through props.recipes
   // in the List component you generate a JSX element by using map method on recipes object
 
+  */
+
 
   render() {
     return (
@@ -70,11 +72,11 @@ class App extends Component {
 
         <h1>My Recipes</h1>
 
-        <Form /> {/*Modify it here EXERCISE 1 */}
+        <Form /> {}
 
         <hr />
 
-        <List  />  {/*Modify it here EXERCISE 2 */}
+        <List  />  {List(this.state.recipes)}
       </div>
     );
   }
@@ -86,11 +88,14 @@ function List(props) {
   //try <Recipe key={recipe.id} {...recipe} /> //spread operator instead of 
   // passing one-by-one property
   //In return statement you wrap Recipe JSX component with div class 'recipe-list'
-  const recipesJSX = props.recipes.map((recipe, index) => (
-    <Recipe key={recipe.id} title={recipe.title} img={recipe.img}
-      instructions={recipe.instructions} id={recipe.id}
-      ingredients={recipe.ingredients} />
-  ));
+//   const recipesJSX = props.recipes.map((recipe, index) => (
+//     <Recipe key={recipe.id} title={recipe.title} img={recipe.img}
+//     instructions={recipe.instructions} id={recipe.id}
+//     ingredients={recipe.ingredients} />
+      
+//   ));
+const recipesJSX = props.recipes.map((recipe, index) => (
+     <Recipe key={recipe.id} {...recipe} />));
 
   return (
     <div className="recipe-list">
@@ -184,8 +189,15 @@ class Form extends Component {
   handleReset = (e) => {
     e.preventDefault();
     alert(`Are you sure you want to reset?`)
-   {/*Modify it here EXERCISE 3 */}
-}
+   {
+     this.setState({
+     title: '',
+     instructions: '',
+     ingredients: [''],
+     img: ''
+   })}
+
+     }
 
   handleSubmit(e) {
     e.preventDefault();
