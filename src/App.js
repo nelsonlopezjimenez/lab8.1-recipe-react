@@ -65,16 +65,19 @@ class App extends Component {
 
 
   render() {
+    const onSave  = this.handleSave,
+          recipes = this.state.recipes;
+          
     return (
       <div className="App">
 
         <h1>My Recipes</h1>
 
-        <Form /> {/*Modify it here EXERCISE 1 */}
+        <Form onSave = { onSave }/> {/*Modify it here EXERCISE 1 */}
 
         <hr />
 
-        <List  />  {/*Modify it here EXERCISE 2 */}
+        <List recipes = { recipes } />  {/*Modify it here EXERCISE 2 */}
       </div>
     );
   }
@@ -87,9 +90,7 @@ function List(props) {
   // passing one-by-one property
   //In return statement you wrap Recipe JSX component with div class 'recipe-list'
   const recipesJSX = props.recipes.map((recipe, index) => (
-    <Recipe key={recipe.id} title={recipe.title} img={recipe.img}
-      instructions={recipe.instructions} id={recipe.id}
-      ingredients={recipe.ingredients} />
+    <Recipe key={recipe.id} {...recipe} />
   ));
 
   return (
@@ -185,6 +186,12 @@ class Form extends Component {
     e.preventDefault();
     alert(`Are you sure you want to reset?`)
    {/*Modify it here EXERCISE 3 */}
+    this.setState({
+      title: '',
+      instructions: "",
+      ingredients: [''],
+      img: ''
+    });
 }
 
   handleSubmit(e) {
