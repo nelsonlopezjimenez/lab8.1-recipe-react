@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import * as apiCalls from './api'
 import './App.css';
 
 class App extends Component {
@@ -6,29 +7,29 @@ class App extends Component {
     super(props);
     this.state = {
       recipes: [
-        {
-          id: 0,
-          title: "Spaghetti",
-          instructions: "Open jar of Spaghetti sauce.  Bring to simmer.  Boil water.  Cook pasta until done.  Combine pasta and sauce",
-          ingredients: ["pasta", "8 cups water", "1 box spaghetti"],
-          img: "spaghetti.jpg"
-        },
-        {
-          id: 1,
-          title: "Milkshake",
-          instructions: "Combine ice cream and milk.  Blend until creamy",
-          ingredients: ["2 Scoops Ice cream", "8 ounces milk"],
-          img: "milkshake.jpg"
-        },
-        {
-          id: 2,
-          title: "Avocado Toast",
-          instructions: "Toast bread.  Slice avocado and spread on bread.  Add salt, oil, and pepper to taste.",
-          ingredients: ["2 slices of bread", "1 avocado", "1 tablespoon olive oil", "1 pinch of salt", "pepper"],
-          img: "avocado_toast.jpg"
-        }
+     //    {
+     //      id: 0,
+     //      title: "Spaghetti",
+     //      instructions: "Open jar of Spaghetti sauce.  Bring to simmer.  Boil water.  Cook pasta until done.  Combine pasta and sauce",
+     //      ingredients: ["pasta", "8 cups water", "1 box spaghetti"],
+     //      img: "spaghetti.jpg"
+     //    },
+     //    {
+     //      id: 1,
+     //      title: "Milkshake",
+     //      instructions: "Combine ice cream and milk.  Blend until creamy",
+     //      ingredients: ["2 Scoops Ice cream", "8 ounces milk"],
+     //      img: "milkshake.jpg"
+     //    },
+     //    {
+     //      id: 2,
+     //      title: "Avocado Toast",
+     //      instructions: "Toast bread.  Slice avocado and spread on bread.  Add salt, oil, and pepper to taste.",
+     //      ingredients: ["2 slices of bread", "1 avocado", "1 tablespoon olive oil", "1 pinch of salt", "pepper"],
+     //      img: "avocado_toast.jpg"
+     //    }
       ],
-      nextRecipeId: 3,
+     //  nextRecipeId: 3,
     }
 
     this.handleSave = this.handleSave.bind(this);
@@ -43,6 +44,16 @@ class App extends Component {
       }
     });
   }
+
+  componentDidMount(){
+       this.loadRecipes();
+  }
+
+  async loadRecipes(){
+       const recipes = await apiCalls.getRecipes();
+       this.setState({recipes });
+  }
+
   /*
    // EXERCISE 1 : Form component is where user enter recipe's data. Its initial state is empty
   //              string for title, instructions, img and an empty array for ingredients
@@ -72,11 +83,11 @@ class App extends Component {
 
         <h1>My Recipes</h1>
 
-        <Form /> {this.handleSave = this.handleSave.bind(this)}
+        <Form onSave = {this.handleSave} /> 
 
         <hr />
 
-        <List  />  {List(this.state.recipes)}
+        <List recipes = {this.state.recipes}  />  
       </div>
     );
   }
@@ -94,14 +105,14 @@ function List(props) {
 //     ingredients={recipe.ingredients} />
       
 //   ));
-// const recipesJSX = props.recipes.map((recipe, index) => (
-//      <Recipe key={recipe.id} {...recipe} />));
+const recipesJSX = props.recipes.map((recipe, index) => (
+     <Recipe key={recipe.id} {...recipe} />));
 
-//   return (
-//     <div className="recipe-list">
-//       {recipesJSX}
-//     </div>
-//   );
+  return (
+    <div className="recipe-list">
+      {recipesJSX}
+    </div>
+  );
 }
 
 function Recipe(props) {
