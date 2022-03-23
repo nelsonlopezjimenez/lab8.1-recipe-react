@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import * as apiCalls from './api'
 import './App.css';
 
 class App extends Component {
@@ -6,29 +7,29 @@ class App extends Component {
     super(props);
     this.state = {
       recipes: [
-        {
-          id: 0,
-          title: "Spaghetti",
-          instructions: "Open jar of Spaghetti sauce.  Bring to simmer.  Boil water.  Cook pasta until done.  Combine pasta and sauce",
-          ingredients: ["pasta", "8 cups water", "1 box spaghetti"],
-          img: "spaghetti.jpg"
-        },
-        {
-          id: 1,
-          title: "Milkshake",
-          instructions: "Combine ice cream and milk.  Blend until creamy",
-          ingredients: ["2 Scoops Ice cream", "8 ounces milk"],
-          img: "milkshake.jpg"
-        },
-        {
-          id: 2,
-          title: "Avocado Toast",
-          instructions: "Toast bread.  Slice avocado and spread on bread.  Add salt, oil, and pepper to taste.",
-          ingredients: ["2 slices of bread", "1 avocado", "1 tablespoon olive oil", "1 pinch of salt", "pepper"],
-          img: "avocado_toast.jpg"
-        }
+     //    {
+     //      id: 0,
+     //      title: "Spaghetti",
+     //      instructions: "Open jar of Spaghetti sauce.  Bring to simmer.  Boil water.  Cook pasta until done.  Combine pasta and sauce",
+     //      ingredients: ["pasta", "8 cups water", "1 box spaghetti"],
+     //      img: "spaghetti.jpg"
+     //    },
+     //    {
+     //      id: 1,
+     //      title: "Milkshake",
+     //      instructions: "Combine ice cream and milk.  Blend until creamy",
+     //      ingredients: ["2 Scoops Ice cream", "8 ounces milk"],
+     //      img: "milkshake.jpg"
+     //    },
+     //    {
+     //      id: 2,
+     //      title: "Avocado Toast",
+     //      instructions: "Toast bread.  Slice avocado and spread on bread.  Add salt, oil, and pepper to taste.",
+     //      ingredients: ["2 slices of bread", "1 avocado", "1 tablespoon olive oil", "1 pinch of salt", "pepper"],
+     //      img: "avocado_toast.jpg"
+     //    }
       ],
-      nextRecipeId: 3,
+     //  nextRecipeId: 3,
     }
 
     this.handleSave = this.handleSave.bind(this);
@@ -44,7 +45,17 @@ class App extends Component {
     });
   }
 
-  // EXERCISE 1 : Form component is where user enter recipe's data. Its initial state is empty 
+  componentDidMount(){
+       this.loadRecipes();
+  }
+
+  async loadRecipes(){
+       const recipes = await apiCalls.getRecipes();
+       this.setState({recipes });
+  }
+
+  /*
+   // EXERCISE 1 : Form component is where user enter recipe's data. Its initial state is empty
   //              string for title, instructions, img and an empty array for ingredients
   //              it has onSubmit event, onClick event, and several onChange events with associated function calls
   //              onSubmit event triggers a onSave call (passed as prop from App component) and state  is updated.
@@ -52,7 +63,7 @@ class App extends Component {
   //              onChange event set the state to the values entered by the user as new recipe.
   //              onSave passed from App component through the props is linked to this.handleSave in the App component
   //                 By submitting the form, onSave function call allows App component, parent of Form, to acquire the new
-  //                 recipe values and add it to its state.recipes array. The event happens in Form component, but it 
+  //                 recipe values and add it to its state.recipes array. The event happens in Form component, but it
   //                 is being implemented in App component. Remember data travels down the tree only, not upstream or between
   //                  siblings. In order for the new recipe to be listed, the new recipe values must pass to List
   //                 component. It cannot happen directly. So, Form "communicate" the new recipe values to App through onSave call
@@ -63,6 +74,8 @@ class App extends Component {
   //in the List component you can access it through props.recipes
   // in the List component you generate a JSX element by using map method on recipes object
 
+  */
+
 
   render() {
     return (
@@ -70,11 +83,11 @@ class App extends Component {
 
         <h1>My Recipes</h1>
 
-        <Form /> {/*Modify it here EXERCISE 1 */}
+        <Form onSave = {this.handleSave} /> 
 
         <hr />
 
-        <List  />  {/*Modify it here EXERCISE 2 */}
+        <List recipes = {this.state.recipes}  />  
       </div>
     );
   }
@@ -86,11 +99,14 @@ function List(props) {
   //try <Recipe key={recipe.id} {...recipe} /> //spread operator instead of 
   // passing one-by-one property
   //In return statement you wrap Recipe JSX component with div class 'recipe-list'
-  const recipesJSX = props.recipes.map((recipe, index) => (
-    <Recipe key={recipe.id} title={recipe.title} img={recipe.img}
-      instructions={recipe.instructions} id={recipe.id}
-      ingredients={recipe.ingredients} />
-  ));
+//   const recipesJSX = props.recipes.map((recipe, index) => (
+//     <Recipe key={recipe.id} title={recipe.title} img={recipe.img}
+//     instructions={recipe.instructions} id={recipe.id}
+//     ingredients={recipe.ingredients} />
+      
+//   ));
+const recipesJSX = props.recipes.map((recipe, index) => (
+     <Recipe key={recipe.id} {...recipe} />));
 
   return (
     <div className="recipe-list">
@@ -184,8 +200,15 @@ class Form extends Component {
   handleReset = (e) => {
     e.preventDefault();
     alert(`Are you sure you want to reset?`)
-   {/*Modify it here EXERCISE 3 */}
-}
+   {
+     this.setState({
+     title: '',
+     instructions: '',
+     ingredients: [''],
+     img: ''
+   })}
+
+     }
 
   handleSubmit(e) {
     e.preventDefault();
