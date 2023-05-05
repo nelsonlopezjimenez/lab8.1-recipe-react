@@ -70,11 +70,11 @@ class App extends Component {
 
         <h1>My Recipes</h1>
 
-        <Form /> {/*Modify it here EXERCISE 1 */}
+        <Form onSave = {this.handleSave}/> {/*Modify it here EXERCISE 1 */}
 
         <hr />
 
-        <List  />  {/*Modify it here EXERCISE 2 */}
+        <List recipes = { this.state.recipes} />  { /*Modify it here EXERCISE 2 */}
       </div>
     );
   }
