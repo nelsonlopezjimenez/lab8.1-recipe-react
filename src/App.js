@@ -47,7 +47,7 @@ class App extends Component {
     return (
       <div className="App">
 
-        <h1>My Recipes</h1>
+        <h1 style={{display:"flex", justifyContent:"center"}}>My Recipes</h1>
 
         <Form onSave = {this.handleSave}/> {/*Modify it here EXERCISE 1 */}
 
