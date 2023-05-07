@@ -114,7 +114,7 @@ function App() {
   return (
     <div className="App">
 
-      <h1>My Recipes</h1>
+      <h1 style={{display: "flex", justifyContent:"center"}}>My JavaScript Videos</h1>
 
       <ListYoutubeNel videos={videos} />
       <ListVideo videos={videoList_11} />
