@@ -43,27 +43,6 @@ class App extends Component {
       }
     });
   }
-
-  // EXERCISE 1 : Form component is where user enter recipe's data. Its initial state is empty 
-  //              string for title, instructions, img and an empty array for ingredients
-  //              it has onSubmit event, onClick event, and several onChange events with associated function calls
-  //              onSubmit event triggers a onSave call (passed as prop from App component) and state  is updated.
-  //              onClick event reset the form.
-  //              onChange event set the state to the values entered by the user as new recipe.
-  //              onSave passed from App component through the props is linked to this.handleSave in the App component
-  //                 By submitting the form, onSave function call allows App component, parent of Form, to acquire the new
-  //                 recipe values and add it to its state.recipes array. The event happens in Form component, but it 
-  //                 is being implemented in App component. Remember data travels down the tree only, not upstream or between
-  //                  siblings. In order for the new recipe to be listed, the new recipe values must pass to List
-  //                 component. It cannot happen directly. So, Form "communicate" the new recipe values to App through onSave call
-  //                  then App component passes its new state (with the new recipe) downstream as prop to List component
-                  // ** HOW DO YOU PASS AS PROP this.handleSave in App component to onSave in FORM COMPONENT?
-
-  // EXERCISE 2 : this.state.recipes contains the data you do want to pass to List component.
-  //in the List component you can access it through props.recipes
-  // in the List component you generate a JSX element by using map method on recipes object
-
-
   render() {
     return (
       <div className="App">
@@ -79,8 +58,6 @@ class App extends Component {
     );
   }
 }
-                  {/*go to line 187 for EXERCISE 3 */}
-
 function List(props) {
 
   //try <Recipe key={recipe.id} {...recipe} /> //spread operator instead of 
@@ -91,16 +68,13 @@ function List(props) {
       instructions={recipe.instructions} id={recipe.id}
       ingredients={recipe.ingredients} />
   ));
-
   return (
     <div className="recipe-list">
       {recipesJSX}
     </div>
   );
 }
-
 function Recipe(props) {
-
   const { title, img, instructions, id } = props; // destructuring the props 
   // wrapping each ingredient with li HTML elements and returning them
   // with an implicit return inside an arrow function.
@@ -177,14 +151,15 @@ class Form extends Component {
     ));
     this.setState({ingredients});
   }
-
-  // EXERCISE 3: handleReset call must set state to its initial state as 
-  //             when the constructor of class Form is called (look above)
-  //            You should use this.setState( {.....})
   handleReset = (e) => {
     e.preventDefault();
-    alert(`Are you sure you want to reset?`)
-   {/*Modify it here EXERCISE 3 */}
+    alert(`Are you sure you want to reset?`);
+    this.setState({
+      title: '',
+      instructions: '',
+      ingredients: [''],
+      img: ''
+    })
 }
 
   handleSubmit(e) {
@@ -289,111 +264,3 @@ class Form extends Component {
   }
 }
 export default App;
-
-/**
- * THIS IS THE ERROR YOU SHOULD RECEIVE WHEN TRYING TO RUN THE APP AS IT IS NOW:
- * It points to line 89: cannot run map on an undefined value: what is the object
- * that map is expecting to execute on??
- * 
- * App.js:89 Uncaught TypeError: Cannot read properties of undefined (reading 'map')
-    at List (App.js:89:1)
-    at renderWithHooks (react-dom.development.js:14985:1)
-    at mountIndeterminateComponent (react-dom.development.js:17811:1)
-    at beginWork (react-dom.development.js:19049:1)
-    at HTMLUnknownElement.callCallback (react-dom.development.js:3945:1)
-    at Object.invokeGuardedCallbackDev (react-dom.development.js:3994:1)
-    at invokeGuardedCallback (react-dom.development.js:4056:1)
-    at beginWork$1 (react-dom.development.js:23964:1)
-    at performUnitOfWork (react-dom.development.js:22776:1)
-    at workLoopSync (react-dom.development.js:22707:1)
-List @ App.js:89
-renderWithHooks @ react-dom.development.js:14985
-mountIndeterminateComponent @ react-dom.development.js:17811
-beginWork @ react-dom.development.js:19049
-callCallback @ react-dom.development.js:3945
-invokeGuardedCallbackDev @ react-dom.development.js:3994
-invokeGuardedCallback @ react-dom.development.js:4056
-beginWork$1 @ react-dom.development.js:23964
-performUnitOfWork @ react-dom.development.js:22776
-workLoopSync @ react-dom.development.js:22707
-renderRootSync @ react-dom.development.js:22670
-performSyncWorkOnRoot @ react-dom.development.js:22293
-scheduleUpdateOnFiber @ react-dom.development.js:21881
-updateContainer @ react-dom.development.js:25482
-(anonymous) @ react-dom.development.js:26021
-unbatchedUpdates @ react-dom.development.js:22431
-legacyRenderSubtreeIntoContainer @ react-dom.development.js:26020
-render @ react-dom.development.js:26103
-./src/index.js @ index.js:7
-options.factory @ react refresh:6
-__webpack_require__ @ bootstrap:24
-(anonymous) @ startup:7
-(anonymous) @ startup:7
-react-dom.development.js:20085 The above error occurred in the <List> component:
-
-    at List (http://localhost:3003/static/js/bundle.js:118:28)
-    at div
-    at App (http://localhost:3003/static/js/bundle.js:28:5)
-
-Consider adding an error boundary to your tree to customize error handling behavior.
-Visit https://reactjs.org/link/error-boundaries to learn more about error boundaries.
-logCapturedError @ react-dom.development.js:20085
-update.callback @ react-dom.development.js:20118
-callCallback @ react-dom.development.js:12318
-commitUpdateQueue @ react-dom.development.js:12339
-commitLifeCycles @ react-dom.development.js:20736
-commitLayoutEffects @ react-dom.development.js:23426
-callCallback @ react-dom.development.js:3945
-invokeGuardedCallbackDev @ react-dom.development.js:3994
-invokeGuardedCallback @ react-dom.development.js:4056
-commitRootImpl @ react-dom.development.js:23151
-unstable_runWithPriority @ scheduler.development.js:468
-runWithPriority$1 @ react-dom.development.js:11276
-commitRoot @ react-dom.development.js:22990
-performSyncWorkOnRoot @ react-dom.development.js:22329
-scheduleUpdateOnFiber @ react-dom.development.js:21881
-updateContainer @ react-dom.development.js:25482
-(anonymous) @ react-dom.development.js:26021
-unbatchedUpdates @ react-dom.development.js:22431
-legacyRenderSubtreeIntoContainer @ react-dom.development.js:26020
-render @ react-dom.development.js:26103
-./src/index.js @ index.js:7
-options.factory @ react refresh:6
-__webpack_require__ @ bootstrap:24
-(anonymous) @ startup:7
-(anonymous) @ startup:7
-App.js:89 Uncaught TypeError: Cannot read properties of undefined (reading 'map')
-    at List (App.js:89:1)
-    at renderWithHooks (react-dom.development.js:14985:1)
-    at mountIndeterminateComponent (react-dom.development.js:17811:1)
-    at beginWork (react-dom.development.js:19049:1)
-    at HTMLUnknownElement.callCallback (react-dom.development.js:3945:1)
-    at Object.invokeGuardedCallbackDev (react-dom.development.js:3994:1)
-    at invokeGuardedCallback (react-dom.development.js:4056:1)
-    at beginWork$1 (react-dom.development.js:23964:1)
-    at performUnitOfWork (react-dom.development.js:22776:1)
-    at workLoopSync (react-dom.development.js:22707:1)
-List @ App.js:89
-renderWithHooks @ react-dom.development.js:14985
-mountIndeterminateComponent @ react-dom.development.js:17811
-beginWork @ react-dom.development.js:19049
-callCallback @ react-dom.development.js:3945
-invokeGuardedCallbackDev @ react-dom.development.js:3994
-invokeGuardedCallback @ react-dom.development.js:4056
-beginWork$1 @ react-dom.development.js:23964
-performUnitOfWork @ react-dom.development.js:22776
-workLoopSync @ react-dom.development.js:22707
-renderRootSync @ react-dom.development.js:22670
-performSyncWorkOnRoot @ react-dom.development.js:22293
-scheduleUpdateOnFiber @ react-dom.development.js:21881
-updateContainer @ react-dom.development.js:25482
-(anonymous) @ react-dom.development.js:26021
-unbatchedUpdates @ react-dom.development.js:22431
-legacyRenderSubtreeIntoContainer @ react-dom.development.js:26020
-render @ react-dom.development.js:26103
-./src/index.js @ index.js:7
-options.factory @ react refresh:6
-__webpack_require__ @ bootstrap:24
-(anonymous) @ startup:7
-(anonymous) @ startup:7
- */
